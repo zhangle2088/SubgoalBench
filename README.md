@@ -7,6 +7,8 @@ SubgoalBench is a reproducible benchmark for **context-induced subgoal misalignm
 
 The paper benchmark contains 10 fixed workflow states, 60 target-action payloads, and eight prefixes per payload (480 SMA instances), together with matched traditional-IPI and payload-only controls. All environments are synthetic and resettable; no real banking, shopping, email, travel, or filesystem service is contacted.
 
+SubgoalBench is not a repackaging of AgentDojo. Its new value lies in fixed-state, action-matched, prefix-graded construction and the joint measurement of execution friction and bridging strength. AgentDojo provides the trusted execution framework and simulated tool interfaces; SubgoalBench adds the benchmark instances, contextual prefix gradients, coordinate probes, validators, and matched analyses used to study CISM/SMA.
+
 ## Installation
 
 ```bash
@@ -42,7 +44,7 @@ Results are written below `runs/<model>/<suite>/`. Use `--logdir` to select a cl
 3. Measure payload-level $\Phi_t$ and injection-task-level $\Delta_t$ using `skill/measure_coordinates.md`.
 4. Run SMA with `--use-probe-template`, then run matched controls and defenses.
 
-The `skill/` directory contains short guides for adding a model, running the benchmark, and measuring the coordinates. `ARTIFACT.md` specifies the release contents and staged reproduction protocol. `DATA_CARD.md` documents provenance, limitations, ethics, and licensing.
+The `skill/` directory contains short guides for adding a model, running the benchmark, and measuring the coordinates. `ARTIFACT.md` specifies the release contents and staged reproduction protocol. `DATA_CARD.md`, `docs/schema.md`, and `docs/provenance.md` document provenance, instance fields, limitations, ethics, and licensing.
 
 ## Responsible use
 
