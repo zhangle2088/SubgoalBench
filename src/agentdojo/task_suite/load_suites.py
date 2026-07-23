@@ -1,10 +1,12 @@
+# ruff: noqa: I001
+
 from collections import defaultdict
 
 import agentdojo.default_suites.v1_1  # Register new tasks
 import agentdojo.default_suites.v1_1_1  # Register new tasks
 import agentdojo.default_suites.v1_2  # Register new tasks
 import agentdojo.default_suites.v1_2_1  # Register new tasks
-import agentdojo.default_suites.v1_2_2  # noqa: F401 # Register new tasks
+import agentdojo.default_suites.v1_2_2  # Register new tasks
 from agentdojo.default_suites.v1.banking import banking_task_suite
 from agentdojo.default_suites.v1.slack import slack_task_suite
 from agentdojo.default_suites.v1.travel import travel_task_suite
@@ -110,25 +112,19 @@ def get_suite(benchmark_version: str, suite_name: str) -> TaskSuite:
     return _SUITES[benchmark_version][suite_name]
 
 
-# headphones suite 自注册（放在 register_suite 定义之后，避免循环导入时函数未定义）
-import agentdojo.default_suites.v1.headphones  # noqa: F401
-import agentdojo.default_suites.v1.headphones_review  # noqa: F401
-import agentdojo.default_suites.v1.headphones_emails  # noqa: F401
-import agentdojo.default_suites.v1.travel_hotel  # noqa: F401
-import agentdojo.default_suites.v1.travel_hotel_link  # noqa: F401
-import agentdojo.default_suites.v1.travel_hotel_link_v2  # noqa: F401
-import agentdojo.default_suites.v1.travel_hotel_form  # noqa: F401
-import agentdojo.default_suites.v1.travel_hotel_download  # noqa: F401
-import agentdojo.default_suites.v1.travel_hotel_email  # noqa: F401
-import agentdojo.default_suites.v1.travel_hotel_link_delta  # noqa: F401
-import agentdojo.default_suites.v1.travel_recommend_restaurant  # noqa: F401
-import agentdojo.default_suites.v1.shopping_delta  # noqa: F401
+# Standalone suites self-register after register_suite is defined. Import order
+# is significant because the base suites contain circular registration imports.
+# Keep the list explicit so a source distribution cannot import development-only
+# suites that are absent from the released artifact.
+import agentdojo.default_suites.v1.headphones
+import agentdojo.default_suites.v1.travel_hotel
+import agentdojo.default_suites.v1.travel_hotel_link_delta
+import agentdojo.default_suites.v1.travel_recommend_restaurant
+import agentdojo.default_suites.v1.shopping_delta
 import agentdojo.default_suites.v1.dailylife_check_mailbox
-import agentdojo.default_suites.v1.banking_delta  # noqa: F401
-import agentdojo.default_suites.v1.banking_bridge_resistance  # noqa: F401
-import agentdojo.default_suites.v1.shopping_send_command_control  # noqa: F401
-import agentdojo.default_suites.v1.workspace_suggest_activities  # noqa: F401
-import agentdojo.default_suites.v1.workspace_schedule_lunch  # noqa: F401
-import agentdojo.default_suites.v1.dailylife_homework_delta  # noqa: F401
+import agentdojo.default_suites.v1.banking_bridge_resistance
+import agentdojo.default_suites.v1.workspace_suggest_activities
+import agentdojo.default_suites.v1.workspace_schedule_lunch
+import agentdojo.default_suites.v1.dailylife_homework_delta
 import agentdojo.default_suites.v1.dailylife_reserve_table
-import agentdojo.default_suites.v1.shopping_otp  # noqa: F401  # noqa: F401
+import agentdojo.default_suites.v1.shopping_otp  # noqa: F401

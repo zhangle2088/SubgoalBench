@@ -44,7 +44,7 @@ Results are written below `runs/<model>/<suite>/`. Use `--logdir` to select a cl
 3. Measure payload-level $\Phi_t$ and injection-task-level $\Delta_t$ using `skill/measure_coordinates.md`.
 4. Run SMA with `--use-probe-template`, then run matched controls and defenses.
 
-The `skill/` directory contains short guides for adding a model, running the benchmark, and measuring the coordinates. `ARTIFACT.md` specifies the release contents and staged reproduction protocol. `DATA_CARD.md`, `docs/schema.md`, and `docs/provenance.md` document provenance, instance fields, limitations, ethics, and licensing.
+The `skill/` directory contains short guides for adding a model, running the benchmark, and measuring the coordinates. `human_annotations/` contains the directly openable offline annotation interface, anonymized labels, and self-contained analysis inputs. `ARTIFACT.md` specifies the release contents and staged reproduction protocol. `DATA_CARD.md`, `docs/schema.md`, and `docs/provenance.md` document provenance, instance fields, limitations, ethics, and licensing.
 
 ## Responsible use
 

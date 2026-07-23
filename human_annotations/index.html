@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>SubgoalBench 人工标注</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="返回开始页">
+        <span class="brand-mark">SB</span>
+        <span><strong>SubgoalBench</strong><small>Human validation</small></span>
+      </a>
+      <div class="top-actions">
+        <button id="rubricButton" class="quiet-button" type="button">评分标准</button>
+        <button id="exportButton" class="quiet-button" type="button">导出进度</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="welcomeView" class="welcome-view">
+        <div class="welcome-copy">
+          <p class="eyebrow">独立、盲法、可恢复</p>
+          <h1>一次只判断一个动作。</h1>
+          <p class="lead">
+            阅读任务和工作流，选择最符合评分标准的 A–E。答案保存在当前浏览器中，关闭页面后也可以继续。
+          </p>
+        </div>
+        <form id="startForm" class="start-card">
+          <label for="annotatorId">你的标注者编号</label>
+          <input id="annotatorId" name="annotatorId" required maxlength="40" autocomplete="off" placeholder="例如 A01" />
+          <fieldset>
+            <legend>本次任务</legend>
+            <label class="assignment-option">
+              <input type="radio" name="assignment" value="phi" checked />
+              <span><strong>Φ 执行阻力</strong><small>60 题 · 判断候选动作有多难被当前任务支持</small></span>
+            </label>
+            <label class="assignment-option">
+              <input type="radio" name="assignment" value="delta" />
+              <span><strong>Δ 桥接强度</strong><small>160 题 · 判断前缀是否让后续动作显得必要</small></span>
+            </label>
+          </fieldset>
+          <label class="consent-row">
+            <input id="blindCheck" type="checkbox" required />
+            <span>我不会查看模型分数、攻击结果或其他标注者答案。</span>
+          </label>
+          <button class="primary-button" type="submit">开始 / 继续标注</button>
+          <p id="resumeHint" class="resume-hint" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section id="annotationView" class="annotation-view" hidden>
+        <aside class="sidebar">
+          <div>
+            <p class="eyebrow" id="factorName"></p>
+            <div class="progress-copy"><strong id="progressCount"></strong><span id="progressPercent"></span></div>
+            <div class="progress-track"><span id="progressBar"></span></div>
+          </div>
+          <nav id="itemNavigator" class="item-navigator" aria-label="题目导航"></nav>
+          <div class="sidebar-footer">
+            <span id="saveState">已自动保存</span>
+            <button id="changeAssignment" class="text-button" type="button">切换任务</button>
+          </div>
+        </aside>
+
+        <article class="workspace">
+          <div class="item-heading">
+            <div><p class="eyebrow">样本 <span id="blindId"></span></p><h2 id="questionTitle"></h2></div>
+            <button id="flagButton" class="flag-button" type="button" aria-pressed="false">标记待复查</button>
+          </div>
+
+          <section class="question-card focus-card">
+            <p class="card-label">原始用户任务</p>
+            <div id="userRequest" class="message-text"></div>
+          </section>
+
+          <details class="context-card">
+            <summary><span><strong>查看完整工作流</strong><small>系统说明、工具调用和返回结果</small></span><span class="chevron">⌄</span></summary>
+            <div id="workflowMessages" class="message-list"></div>
+          </details>
+
+          <section id="candidateCard" class="question-card candidate-card"></section>
+
+          <section class="answer-panel" aria-labelledby="answerHeading">
+            <div class="answer-heading"><div><p class="card-label">你的判断</p><h3 id="answerHeading"></h3></div><span class="keyboard-hint">可按 A–E</span></div>
+            <div id="labelOptions" class="label-options" role="radiogroup"></div>
+            <div class="secondary-fields">
+              <label>信心程度
+                <select id="confidenceSelect">
+                  <option value="">请选择</option><option value="1">1 · 很不确定</option><option value="2">2</option><option value="3">3 · 一般</option><option value="4">4</option><option value="5">5 · 很确定</option>
+                </select>
+              </label>
+              <label class="notes-field">备注（可选）<textarea id="notesInput" rows="2" placeholder="仅在边界模糊或上下文有问题时简要说明"></textarea></label>
+            </div>
+          </section>
+
+          <footer class="item-controls">
+            <button id="previousButton" class="secondary-button" type="button">← 上一题</button>
+            <button id="nextButton" class="primary-button" type="button">保存并下一题 →</button>
+          </footer>
+        </article>
+      </section>
+
+      <section id="completeView" class="complete-view" hidden>
+        <div class="completion-card"><p class="eyebrow">任务完成</p><h1>所有题目都已作答。</h1><p>请导出 CSV 并发送给研究负责人。浏览器中的进度会继续保留。</p><div class="completion-actions"><button id="completeExport" class="primary-button" type="button">导出最终 CSV</button><button id="reviewAnswers" class="secondary-button" type="button">返回复查</button></div></div>
+      </section>
+    </main>
+
+    <dialog id="rubricDialog">
+      <div class="dialog-heading"><div><p class="eyebrow">评分标准</p><h2 id="rubricTitle"></h2></div><button id="closeRubric" class="close-button" aria-label="关闭" type="button">×</button></div>
+      <div id="rubricContent" class="rubric-content"></div>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="dataset.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

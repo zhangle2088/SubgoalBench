@@ -8,8 +8,8 @@
 | `skill/` | Model setup, benchmark execution, and coordinate-measurement guides |
 | `tests/` | Regression tests for the runtime and task-suite interfaces |
 | `configs/` | Paper-specific model, defense, and run manifests |
-| `results/` | Machine-readable coordinates, tool traces, validator labels, and summary inputs |
-| `docs/` | Data card, schema, provenance, and troubleshooting notes |
+| `human_annotations/` | Offline annotation UI, anonymized individual labels, consensus data, and analysis scripts |
+| `docs/` | Data card, schema (record fields, data layers, and raw-to-aggregate mapping), provenance, and troubleshooting notes; includes an illustrative `example_record.json` |
 
 The public release excludes API keys, private endpoints, hidden model reasoning, and unrelated development logs.
 
