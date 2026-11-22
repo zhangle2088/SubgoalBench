@@ -1,5 +1,7 @@
 # SubgoalBench
 
+**Accepted at KDD ’27.** SubgoalBench: A Benchmark for Characterizing Context-Induced Subgoal Misalignment in Tool-Using LLM Agents. The archived software artifact is [SubgoalBench v1.0.0](https://github.com/zhangle2088/SubgoalBench/releases/tag/v1.0.0).
+
 SubgoalBench is a reproducible benchmark for **context-induced subgoal misalignment** in tool-using LLM agents. It evaluates Subgoal Misalignment Attacks (SMA) at fixed workflow states and separates two external coordinates:
 
 - **Execution friction ($\Phi_t$):** how difficult a target action is to support in the current workflow.
